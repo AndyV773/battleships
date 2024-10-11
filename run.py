@@ -1,7 +1,7 @@
 from random import randint
 from pprint import pprint
 
-scores = {"computer" : 0, "player" : 0}
+SCORES = {"computer" : 0, "player" : 0}
 
 class Board:
     """
@@ -34,9 +34,9 @@ class Board:
 
         if (x, y) in self.ships:
             self.board[x][y] = "*"
-            return "Hit"
+            return True
         else:
-            return "Miss"
+            return False
     
     def add_ship(self, x, y, type="computer"):
         if len(self.ships) >= self.num_ships:
@@ -75,16 +75,41 @@ def make_guess(board):
     """
 
     """
+    
+    if board.type == "player":
+        y = int(input("Guess a row: \n"))
+        x = int(input("Guess a column: \n"))
+
+        print(f"{board.name} guessed: {y, x}")
+    else:
+        size = board.size
+        x = random_point(size)
+        y = random_point(size)
+
+        print(f"{board.name} guessed: {y, x}")
+
+
+    return x, y
+    
+
 
 def play_game(computer_board, player_board):
     """
 
     """
-    print(f"{computer_board.name}'s Board:")
-    computer_board.print()
-    print("-" * player_board.size * 2)
-    print(f"{player_board.name}'s Board:")
-    player_board.print()
+    while True:
+        print(f"{computer_board.name}'s Board:")
+        computer_board.print()
+        print("-" * player_board.size * 2)
+        print(f"{player_board.name}'s Board:")
+        player_board.print()
+
+        player_awnser = make_guess(player_board)
+        computer_awnser = make_guess(computer_board)
+
+        computer_board.guess(*player_awnser)
+        player_board.guess(*computer_awnser)
+    
 
 def new_game():
     """
@@ -94,8 +119,8 @@ def new_game():
 
     size = 5
     num_ships = 4
-    scores["computer"] = 0
-    scores["player"] = 0
+    SCORES["computer"] = 0
+    SCORES["player"] = 0
     print("-" * 35)
     print(" Welcome to ULTIMATE BATTLESHIPS!!")
     print(f" Board size: {size}. Number of ships: {num_ships}")
