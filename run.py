@@ -16,20 +16,21 @@ class Board:
         self.num_ships = num_ships
         self.name = name
         self.type = type
-        self.guesses = []
+        self.player_guesses = []
+        self.computer_guesses = []
         self.ships = []
-    
+
+
     def print(self):
         for num in range(0, self.size):
             print(num, end=" ")
         print()
 
-        
         for row in self.board:
             print(" ".join(row))
-    
+
+    # This method is switched up, due to making the 'X' appear on the opposed board
     def guess(self, x, y):
-        self.guesses.append((x, y))
         self.board[x][y] = "X"
 
         if (x, y) in self.ships:
@@ -37,7 +38,8 @@ class Board:
             return True
         else:
             return False
-    
+
+
     def add_ship(self, x, y, type="computer"):
         if len(self.ships) >= self.num_ships:
             print("Error: you cannot add anymore ships!")
@@ -58,7 +60,35 @@ def valid_coordinates(x, y, board):
     """
     
     """
-    # try:
+    
+
+    if board.type == "player":
+        # list1 = [(x, y)]
+        player_list = board.player_guesses
+        # print(list1)
+        # new_guess = set(list1)
+        # old_guesses = set(list2)
+        # print(new_guess)
+        # print(old_guesses)
+        try:
+            if x < 0 or x >= board.size or y < 0 or y >= board.size:
+                raise ValueError(
+                    f"Values must be between 0 and {board.size - 1}"
+                )
+            elif (x, y) in player_list:
+                raise ValueError(
+                    f"You can't guess the same coordinates twice {player_list}"
+                )
+            else:
+                player_list.append((x, y))
+                return True
+        except ValueError as e:
+            print(f"{e}, please try again.\n")
+            return False
+        
+    # else:
+    #     if board.board[x][y] != "." or board.board[x][y] != "@":
+    #         return False
 
 
 def populate_board(board):
@@ -77,17 +107,25 @@ def make_guess(board):
     """
     
     if board.type == "player":
-        y = int(input("Guess a row: \n"))
-        x = int(input("Guess a column: \n"))
-
-        print(f"{board.name} guessed: {y, x}")
+        while True:
+            while True:
+                try:
+                    x = int(input("Guess a row: \n"))   
+                    y = int(input("Guess a column: \n"))
+                    break
+                except ValueError:
+                    print("You must enter a number!")
+         
+            if valid_coordinates(x, y, board):
+                print(f"{board.name} guessed: {x, y}")
+                break
+        
     else:
         size = board.size
         x = random_point(size)
         y = random_point(size)
-
-        print(f"{board.name} guessed: {y, x}")
-
+        # if valid_coordinates(x, y, board):
+        #     print(f"{board.name} guessed: {x, y}")
 
     return x, y
     
@@ -105,10 +143,20 @@ def play_game(computer_board, player_board):
         player_board.print()
 
         player_awnser = make_guess(player_board)
-        computer_awnser = make_guess(computer_board)
+        player_result_win = computer_board.guess(*player_awnser)
 
-        computer_board.guess(*player_awnser)
-        player_board.guess(*computer_awnser)
+        if player_result_win:
+            print(f"{player_board.name} got a hit!!")
+        else:
+            print(f"{player_board.name} missed this time.")
+
+        computer_awnser = make_guess(computer_board)
+        computer_result_win = player_board.guess(*computer_awnser)
+
+        if computer_result_win:
+            print(f"{computer_board.name} got a hit!!")
+        else:
+            print(f"{computer_board.name} missed this time.")
     
 
 def new_game():
@@ -117,7 +165,7 @@ def new_game():
     scores and initialises the board
     """
 
-    size = 5
+    size = 10
     num_ships = 4
     SCORES["computer"] = 0
     SCORES["player"] = 0
