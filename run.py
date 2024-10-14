@@ -46,13 +46,38 @@ class Board:
             self.ships.append((x, y))
             if self.type == "player":
                 self.board[x][y] = "@"
-    
+
+
 def random_point(size):
     """
     Helper function to return a random integer between 0 and size
     """
 
     return randint(0, size -1)
+
+
+def populate_board(board):
+    """
+
+    """
+
+    size = board.size
+    x = random_point(size)
+    y = random_point(size)
+    board.add_ship(x, y)
+
+
+def adjust_scores(board):
+    """
+    Adds 1 to player or computers score
+    """
+
+    if board.type == "player":
+        SCORES["player"] = SCORES["player"] +1
+    else:
+        SCORES["computer"] = SCORES["computer"] +1
+
+
 
 
 def valid_coordinates(x, y, board):
@@ -75,7 +100,7 @@ def valid_coordinates(x, y, board):
                 player_list.append((x, y))
                 return True
         except ValueError as e:
-            print(f"{e}, please try again.\n")
+            print(f"{e}, please try again.")
             return False
         
     else:
@@ -85,16 +110,6 @@ def valid_coordinates(x, y, board):
         else:
             computer_list.append((x, y))
             return True
-
-
-def populate_board(board):
-    """
-
-    """
-    size = board.size
-    x = random_point(size)
-    y = random_point(size)
-    board.add_ship(x, y)
 
 
 def make_guess(board):
@@ -126,7 +141,6 @@ def make_guess(board):
                 break
 
     return x, y
-    
 
 
 def play_game(computer_board, player_board):
@@ -145,7 +159,8 @@ def play_game(computer_board, player_board):
         player_result_win = computer_board.guess(*player_awnser)
 
         if player_result_win:
-            print(f"{player_board.name} got a hit!!")
+            adjust_scores(player_board)
+            print(f"{player_board.name} got a Hit!!")
         else:
             print(f"{player_board.name} missed this time.")
 
@@ -153,9 +168,15 @@ def play_game(computer_board, player_board):
         computer_result_win = player_board.guess(*computer_awnser)
 
         if computer_result_win:
-            print(f"{computer_board.name} got a hit!!")
+            adjust_scores(computer_board)
+            print(f"{computer_board.name} got a Hit!!")
         else:
             print(f"{computer_board.name} missed this time.")
+        
+        print("-" * 35)
+        print("After this round the scores are:")
+        print(f"{player_board.name}: {SCORES["player"]}. {computer_board.name}: {SCORES["computer"]}")
+        print("-" * 35)
     
 
 def new_game():
