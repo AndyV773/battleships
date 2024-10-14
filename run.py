@@ -177,6 +177,13 @@ def play_game(computer_board, player_board):
         print("After this round the scores are:")
         print(f"{player_board.name}: {SCORES["player"]}. {computer_board.name}: {SCORES["computer"]}")
         print("-" * 35)
+
+        player_continue = input("Enter any key to continue or n to quite: \n")
+        if player_continue.lower() == "n":
+            print("Exiting...")
+            break
+        else:
+            continue
     
 
 def new_game():
