@@ -1,5 +1,4 @@
 from random import randint
-from pprint import pprint
 
 SCORES = {"computer" : 0, "player" : 0}
 
@@ -61,15 +60,8 @@ def valid_coordinates(x, y, board):
     
     """
     
-
     if board.type == "player":
-        # list1 = [(x, y)]
         player_list = board.player_guesses
-        # print(list1)
-        # new_guess = set(list1)
-        # old_guesses = set(list2)
-        # print(new_guess)
-        # print(old_guesses)
         try:
             if x < 0 or x >= board.size or y < 0 or y >= board.size:
                 raise ValueError(
@@ -86,9 +78,13 @@ def valid_coordinates(x, y, board):
             print(f"{e}, please try again.\n")
             return False
         
-    # else:
-    #     if board.board[x][y] != "." or board.board[x][y] != "@":
-    #         return False
+    else:
+        computer_list = board.computer_guesses
+        if (x, y) in computer_list:
+            return False
+        else:
+            computer_list.append((x, y))
+            return True
 
 
 def populate_board(board):
@@ -121,11 +117,13 @@ def make_guess(board):
                 break
         
     else:
-        size = board.size
-        x = random_point(size)
-        y = random_point(size)
-        # if valid_coordinates(x, y, board):
-        #     print(f"{board.name} guessed: {x, y}")
+        while True:
+            size = board.size
+            x = random_point(size)
+            y = random_point(size)
+            if valid_coordinates(x, y, board):
+                print(f"{board.name} guessed: {x, y}")
+                break
 
     return x, y
     
@@ -135,6 +133,7 @@ def play_game(computer_board, player_board):
     """
 
     """
+
     while True:
         print(f"{computer_board.name}'s Board:")
         computer_board.print()
