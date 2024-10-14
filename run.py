@@ -178,6 +178,20 @@ def play_game(computer_board, player_board):
         print(f"{player_board.name}: {SCORES["player"]}. {computer_board.name}: {SCORES["computer"]}")
         print("-" * 35)
 
+        if SCORES["player"] == computer_board.num_ships and SCORES["computer"] == player_board.num_ships:
+            print("GAME OVER!!")
+            print("It was a draw! Better luck next time.")
+            new_game()
+        elif SCORES["player"] == computer_board.num_ships:
+            print("Well done!! You are the victor!!")
+            new_game()
+        elif SCORES["computer"] == player_board.num_ships:
+            print("GAME OVER!!")
+            print("Bad luck! The computer beat you.")
+            new_game()
+        else:
+           continue
+        
         player_continue = input("Enter any key to continue or n to quite: \n")
         if player_continue.lower() == "n":
             print("Exiting...")
@@ -195,12 +209,12 @@ def new_game():
     while True:
         try:
             size = int(input("Please enter size of map 4 - 10: \n"))
-            if size < 4 or size > 10:
+            if size < 2 or size > 10:
                 raise ValueError
             break
         except ValueError:
             print("You must enter a number between 4 and 10!")
-    num_ships = 4
+    num_ships = 1
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print("-" * 35)
