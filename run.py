@@ -165,7 +165,14 @@ def new_game():
     scores and initialises the board
     """
 
-    size = 10
+    while True:
+        try:
+            size = int(input("Please enter size of map 4 - 10: \n"))
+            if size < 4 or size > 10:
+                raise ValueError
+            break
+        except ValueError:
+            print("You must enter a number between 4 and 10!")
     num_ships = 4
     SCORES["computer"] = 0
     SCORES["player"] = 0
