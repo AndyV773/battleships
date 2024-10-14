@@ -2,6 +2,7 @@ from random import randint
 
 SCORES = {"computer" : 0, "player" : 0}
 
+# Some of the code in the Board class come from code insitute https://p3-battleships.herokuapp.com/
 class Board:
     """
     Main board class. Sets board size, the number of ships,
@@ -21,12 +22,14 @@ class Board:
 
 
     def print(self):
+        print(" " * 2, end="")
         for num in range(0, self.size):
             print(num, end=" ")
         print()
 
-        for row in self.board:
-            print(" ".join(row))
+        for row in range(len(self.board)):
+            print(row, " ".join(self.board[row]))
+
 
     # This method is switched up, due to making the 'X' appear on the opposed board
     def guess(self, x, y):
@@ -39,6 +42,7 @@ class Board:
             return False
 
 
+    # code for add ship method from code insitute https://p3-battleships.herokuapp.com/
     def add_ship(self, x, y, type="computer"):
         if len(self.ships) >= self.num_ships:
             print("Error: you cannot add anymore ships!")
@@ -48,6 +52,7 @@ class Board:
                 self.board[x][y] = "@"
 
 
+# code for random point function from code insitute https://p3-battleships.herokuapp.com/
 def random_point(size):
     """
     Helper function to return a random integer between 0 and size
@@ -78,8 +83,6 @@ def adjust_scores(board):
         SCORES["computer"] = SCORES["computer"] +1
 
 
-
-
 def valid_coordinates(x, y, board):
     """
     
@@ -87,21 +90,13 @@ def valid_coordinates(x, y, board):
     
     if board.type == "player":
         player_list = board.player_guesses
-        try:
-            if x < 0 or x >= board.size or y < 0 or y >= board.size:
-                raise ValueError(
-                    f"Values must be between 0 and {board.size - 1}"
-                )
-            elif (x, y) in player_list:
-                raise ValueError(
-                    f"You can't guess the same coordinates twice {player_list}"
-                )
-            else:
-                player_list.append((x, y))
-                return True
-        except ValueError as e:
-            print(f"{e}, please try again.")
-            return False
+        if x < 0 or x >= board.size or y < 0 or y >= board.size:
+            print(f"Values must be between 0 and {board.size - 1}")
+        elif (x, y) in player_list:
+            print(f"You can't guess the same coordinates twice {player_list}")
+        else:
+            player_list.append((x, y))
+            return True
         
     else:
         computer_list = board.computer_guesses
@@ -143,6 +138,24 @@ def make_guess(board):
     return x, y
 
 
+def win_lose(computer_board, player_board):
+    """
+    
+    """
+    if SCORES["player"] == computer_board.num_ships or SCORES["computer"] == player_board.num_ships:
+
+        if SCORES["player"] == computer_board.num_ships and SCORES["computer"] == player_board.num_ships:
+            print("GAME OVER!!")
+            print("It was a draw! Better luck next time.")
+        elif SCORES["player"] == computer_board.num_ships:
+            print("Well done!! You are the victor!!")
+        elif SCORES["computer"] == player_board.num_ships:
+            print("GAME OVER!!")
+            print("Bad luck! The computer beat you.")
+    
+        return True
+
+
 def play_game(computer_board, player_board):
     """
 
@@ -175,31 +188,22 @@ def play_game(computer_board, player_board):
         
         print("-" * 35)
         print("After this round the scores are:")
-        print(f"{player_board.name}: {SCORES["player"]}. {computer_board.name}: {SCORES["computer"]}")
+        print(f"{player_board.name}: {SCORES["player"]} / {computer_board.name}: {SCORES["computer"]}")
         print("-" * 35)
 
-        if SCORES["player"] == computer_board.num_ships and SCORES["computer"] == player_board.num_ships:
-            print("GAME OVER!!")
-            print("It was a draw! Better luck next time.")
-            new_game()
-        elif SCORES["player"] == computer_board.num_ships:
-            print("Well done!! You are the victor!!")
-            new_game()
-        elif SCORES["computer"] == player_board.num_ships:
-            print("GAME OVER!!")
-            print("Bad luck! The computer beat you.")
-            new_game()
-        else:
-           continue
-        
+        results = win_lose(computer_board, player_board)
         player_continue = input("Enter any key to continue or n to quite: \n")
-        if player_continue.lower() == "n":
+
+        if results and player_continue.lower() != "n":
+            new_game()
+        elif player_continue.lower() == "n":
             print("Exiting...")
             break
         else:
             continue
-    
 
+
+# Some of the code for the new game function come from code insitute https://p3-battleships.herokuapp.com/
 def new_game():
     """
     Starts a new game. Sets the board size and number of ships, resets the
@@ -208,12 +212,12 @@ def new_game():
 
     while True:
         try:
-            size = int(input("Please enter size of map 4 - 10: \n"))
+            size = int(input("Please enter size of map 2 - 10: \n"))
             if size < 2 or size > 10:
                 raise ValueError
             break
         except ValueError:
-            print("You must enter a number between 4 and 10!")
+            print("You must enter a number between 2 and 10!")
     num_ships = 1
     SCORES["computer"] = 0
     SCORES["player"] = 0
