@@ -1,4 +1,8 @@
 from random import randint
+# This channel helped with colorama https://youtu.be/u51Zjlnui4Y?si=8G1BQBbluJfsmED7
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
 SCORES = {"computer" : 0, "player" : 0}
 
@@ -22,17 +26,36 @@ class Board:
 
 
     def print(self):
-        print(" " * 2, end="")
-        for num in range(0, self.size):
-            print(num, end=" ")
-        print()
+        """
+        
+        """
 
-        for row in range(len(self.board)):
-            print(row, " ".join(self.board[row]))
+        space = " "
+        if self.size < 10:
+            print(space, end=" ")
+            for num in range(0, self.size):
+                print(num, end=" ")
+            print()
+            # Had to do some research, but this helped with some pointers https://python-forum.io/thread-362.html
+            for i, row in enumerate(self.board):
+                print(i, space.join(row))
+        else:
+            space *= 2
+            for num in range(10):
+                print(num, end=space)
+            for num in range(10, self.size):
+                print(num, end=" ")
+            print()
+            for i, row in enumerate(self.board):
+                print(space.join(row), i)
 
 
     # This method is switched up, due to making the 'X' appear on the opposed board
     def guess(self, x, y):
+        """
+        
+        """
+
         self.board[x][y] = "X"
 
         if (x, y) in self.ships:
@@ -44,6 +67,10 @@ class Board:
 
     # code for add ship method from code insitute https://p3-battleships.herokuapp.com/
     def add_ship(self, x, y, type="computer"):
+        """
+        
+        """
+
         if len(self.ships) >= self.num_ships:
             print("Error: you cannot add anymore ships!")
         else:
@@ -85,7 +112,9 @@ def adjust_scores(board):
 
 def valid_coordinates(x, y, board):
     """
-    
+    Appends the values x and y to the corresponding player's _guesses list.
+    Returns True if x and y are within range of the class size 
+    and have not been used before (i.e, appended to the _guesses list)
     """
     
     if board.type == "player":
@@ -154,6 +183,8 @@ def win_lose(computer_board, player_board):
             print("Bad luck! The computer beat you.")
     
         return True
+    else:
+        return False
 
 
 def play_game(computer_board, player_board):
@@ -194,13 +225,14 @@ def play_game(computer_board, player_board):
         results = win_lose(computer_board, player_board)
         player_continue = input("Enter any key to continue or n to quite: \n")
 
-        if results and player_continue.lower() != "n":
-            new_game()
-        elif player_continue.lower() == "n":
+        if player_continue.lower() == "n":
             print("Exiting...")
             break
+        elif results and player_continue.lower() != "n":
+            new_game()
         else:
             continue
+
 
 
 # Some of the code for the new game function come from code insitute https://p3-battleships.herokuapp.com/
@@ -213,7 +245,7 @@ def new_game():
     while True:
         try:
             size = int(input("Please enter size of map 2 - 10: \n"))
-            if size < 2 or size > 10:
+            if size < 2 or size > 50:
                 raise ValueError
             break
         except ValueError:
