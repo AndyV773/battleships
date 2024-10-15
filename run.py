@@ -4,6 +4,8 @@ import colorama
 from colorama import Fore, Back, Style
 colorama.init(autoreset=True)
 
+LIGHT_BLUE = '\033[1;34m'
+
 SCORES = {"computer" : 0, "player" : 0}
 
 # Some of the code in the Board class come from code insitute https://p3-battleships.herokuapp.com/
@@ -16,7 +18,7 @@ class Board:
 
     def __init__(self, size, num_ships, name, type):
         self.size = size
-        self.board = [['.' for x in range(size)] for y in range(size)]
+        self.board = [[f"{LIGHT_BLUE}." for x in range(size)] for y in range(size)]
         self.num_ships = num_ships
         self.name = name
         self.type = type
@@ -34,20 +36,20 @@ class Board:
         if self.size < 10:
             print(space, end=" ")
             for num in range(0, self.size):
-                print(num, end=" ")
+                print(Fore.GREEN + str(num), end=" ")
             print()
             # Had to do some research, but this helped with some pointers https://python-forum.io/thread-362.html
             for i, row in enumerate(self.board):
-                print(i, space.join(row))
+                print(Fore.GREEN + str(i), LIGHT_BLUE + space.join(row))
         else:
             space *= 2
             for num in range(10):
-                print(num, end=space)
+                print(Fore.GREEN + str(num), end=space)
             for num in range(10, self.size):
-                print(num, end=" ")
+                print(Fore.GREEN + str(num), end=" ")
             print()
             for i, row in enumerate(self.board):
-                print(space.join(row), i)
+                print(LIGHT_BLUE + space.join(row), Fore.GREEN + str(i))
 
 
     # This method is switched up, due to making the 'X' appear on the opposed board
@@ -59,8 +61,12 @@ class Board:
         self.board[x][y] = "X"
 
         if (x, y) in self.ships:
-            self.board[x][y] = "*"
-            return True
+            if self.type == "computer":
+                self.board[x][y] = f"{Fore.YELLOW}*"
+                return True
+            else:
+                self.board[x][y] = f"{Fore.RED}*"
+                return True
         else:
             return False
 
@@ -76,7 +82,7 @@ class Board:
         else:
             self.ships.append((x, y))
             if self.type == "player":
-                self.board[x][y] = "@"
+                self.board[x][y] = f"{Fore.YELLOW}@"
 
 
 # code for random point function from code insitute https://p3-battleships.herokuapp.com/
@@ -195,7 +201,7 @@ def play_game(computer_board, player_board):
     while True:
         print(f"{computer_board.name}'s Board:")
         computer_board.print()
-        print("-" * player_board.size * 2)
+        print("-" * player_board.size * 3)
         print(f"{player_board.name}'s Board:")
         player_board.print()
 
@@ -244,13 +250,13 @@ def new_game():
 
     while True:
         try:
-            size = int(input("Please enter size of map 2 - 10: \n"))
+            size = int(input("Please enter size of map 2 - 50: \n"))
             if size < 2 or size > 50:
                 raise ValueError
             break
         except ValueError:
-            print("You must enter a number between 2 and 10!")
-    num_ships = 1
+            print(Fore.RED + "You must enter a number between 2 and 50!")
+    num_ships = 10
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print("-" * 35)
