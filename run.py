@@ -11,8 +11,12 @@ BRIGHT_CYAN = "\033[36;1m"
 BRIGHT_RED = "\033[31;1m"
 BRIGHT_YELLOW = "\033[33;1m"
 BRIGHT_GREEN = "\033[32;1m"
+BRIGHT_MAGENTA = "\033[35;1m"
 
+# Global variables
 SCORES = {"computer" : 0, "player" : 0}
+# Helper variable to break out of play game while loop
+PLAY_GAME = True
 
 # Some of the code in the Board class come from code insitute https://p3-battleships.herokuapp.com/
 class Board:
@@ -100,7 +104,6 @@ def populate_board(board):
     """
 
     """
-
     size = board.size
     x = random_point(size)
     y = random_point(size)
@@ -148,7 +151,7 @@ def make_guess(board):
     """
 
     """
-    
+
     if board.type == "player":
         while True:
             while True:
@@ -180,7 +183,6 @@ def win_lose(computer_board, player_board):
     
     """
     if SCORES["player"] == computer_board.num_ships or SCORES["computer"] == player_board.num_ships:
-
         if SCORES["player"] == computer_board.num_ships and SCORES["computer"] == player_board.num_ships:
             print(BRIGHT_RED + "GAME OVER!!")
             print(BRIGHT_YELLOW + "It was a draw! Better luck next time.")
@@ -189,7 +191,6 @@ def win_lose(computer_board, player_board):
         elif SCORES["computer"] == player_board.num_ships:
             print(BRIGHT_RED + "GAME OVER!!")
             print(BRIGHT_RED + "Bad luck! The computer beat you.")
-    
         return True
     else:
         return False
@@ -199,8 +200,12 @@ def play_game(computer_board, player_board):
     """
 
     """
+    print('IN: play_game')
+    global PLAY_GAME
 
-    while True:
+    while PLAY_GAME == True:
+        print('IN: play_game WHILE LOOP')
+
         print(f"{BRIGHT_BLUE}{computer_board.name}'s Board:")
         computer_board.print()
         print(BRIGHT_YELLOW + "-" * player_board.size * 3)
@@ -231,16 +236,33 @@ def play_game(computer_board, player_board):
         print(BRIGHT_YELLOW + "-" * 35)
 
         results = win_lose(computer_board, player_board)
-        player_continue = input(BRIGHT_BLUE + "Enter any key to continue or n to quite: \n")
 
-        if player_continue.lower() == "n":
-            print("Exiting...")
+        if end_game(results) == True:
             break
-        elif results and player_continue.lower() != "n":
-            new_game()
-        else:
-            continue
+        
 
+    print(BRIGHT_MAGENTA + "Exiting game...")
+    PLAY_GAME = False
+
+
+def end_game(results):
+    """
+    
+    """
+
+    player_continue = input(BRIGHT_BLUE + "Enter any key to continue or n to quite: \n" + BRIGHT_MAGENTA)
+
+    if player_continue.lower() == "n":
+        print(BRIGHT_RED + "Ending Game!")
+        print(BRIGHT_YELLOW + "Exiting...")
+        return True
+    elif results == True and player_continue.lower() != "n":
+        print(BRIGHT_GREEN + "Starting new game...")
+        new_game()
+    else:
+        print(BRIGHT_GREEN + "Continuing...")
+        return False
+            
 
 
 # Some of the code for the new game function come from code insitute https://p3-battleships.herokuapp.com/
