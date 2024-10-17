@@ -89,12 +89,13 @@ class Board:
         Appends self.ships to x and y,
         if type is player self.board is replaced with "@"
         """
+        print("IN: add ship")
 
         if len(self.ships) >= self.num_ships:
             print("Error: you cannot add anymore ships!")
         else:
             self.ships.append((x, y))
-            if self.type == "player":
+            if self.type == "player" or self.type == "computer":
                 print("IN: add_ship")
                 self.board[x][y] = f"{BRIGHT_YELLOW}@"
 
@@ -326,6 +327,9 @@ def new_game():
     print(BRIGHT_BLUE + " Welcome to ULTIMATE BATTLESHIPS!!")
     print(f" {BRIGHT_BLUE}Board size: {BRIGHT_GREEN}{size}{BRIGHT_BLUE}. Number of ships: {BRIGHT_GREEN}{num_ships}")
     print(f" {BRIGHT_BLUE}Top left corner is row: {BRIGHT_GREEN}0{BRIGHT_BLUE}, col: {BRIGHT_GREEN}0")
+    print(BRIGHT_YELLOW + "-" * 35)
+    print(BRIGHT_BLUE + " Board: ", BRIGHT_CYAN + ". ", BRIGHT_BLUE + " Player Ship: ", BRIGHT_YELLOW + "@")
+    print(BRIGHT_BLUE + " Miss: ", BRIGHT_GREEN + " X ", BRIGHT_BLUE + " Hit: ", BRIGHT_RED + "*")
     print(BRIGHT_YELLOW + "-" * 35)
     player_name = input(BRIGHT_BLUE + "Please enter your name: \n" + BRIGHT_CYAN)
     print(BRIGHT_YELLOW + "-" * 35)
