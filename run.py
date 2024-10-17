@@ -13,10 +13,14 @@ BRIGHT_YELLOW = "\033[33;1m"
 BRIGHT_GREEN = "\033[32;1m"
 BRIGHT_MAGENTA = "\033[35;1m"
 
+COLORS = [BRIGHT_YELLOW, BRIGHT_MAGENTA, BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_CYAN, BRIGHT_RED]
+COLOR_INDEX = 0
+
 # Global variables
 SCORES = {"computer" : 0, "player" : 0}
 # Helper variable to break out of play game while loop
 PLAY_GAME = True
+LOOP_COUNTER = 1
 
 # Some of the code in the Board class come from code insitute https://p3-battleships.herokuapp.com/
 class Board:
@@ -163,7 +167,7 @@ def make_guess(board):
                     print(BRIGHT_RED + "You must enter a number!".upper())
          
             if valid_coordinates(x, y, board):
-                print(f"{BRIGHT_BLUE}{board.name} guessed: {BRIGHT_GREEN}{x, y}")
+                print(f"{BRIGHT_CYAN}{board.name} {BRIGHT_BLUE}guessed: {BRIGHT_GREEN}{x, y}")
                 break
         
     else:
@@ -172,7 +176,7 @@ def make_guess(board):
             x = random_point(size)
             y = random_point(size)
             if valid_coordinates(x, y, board):
-                print(f"{BRIGHT_BLUE}{board.name} guessed: {BRIGHT_GREEN}{x, y}")
+                print(f"{BRIGHT_CYAN}{board.name} {BRIGHT_BLUE}guessed: {BRIGHT_GREEN}{x, y}")
                 break
 
     return x, y
@@ -202,14 +206,17 @@ def play_game(computer_board, player_board):
     """
     print('IN: play_game')
     global PLAY_GAME
+    global LOOP_COUNTER
+    global COLORS
+    global COLOR_INDEX
 
     while PLAY_GAME == True:
         print('IN: play_game WHILE LOOP')
 
-        print(f"{BRIGHT_BLUE}{computer_board.name}'s Board:")
+        print(f"{BRIGHT_CYAN}{computer_board.name}'s {BRIGHT_BLUE}Board:")
         computer_board.print()
         print(BRIGHT_YELLOW + "-" * player_board.size * 3)
-        print(f"{BRIGHT_BLUE}{player_board.name}'s Board:")
+        print(f"{BRIGHT_CYAN}{player_board.name}'s {BRIGHT_BLUE}Board:")
         player_board.print()
 
         player_awnser = make_guess(player_board)
@@ -240,8 +247,12 @@ def play_game(computer_board, player_board):
         if end_game(results) == True:
             break
         
+    if COLOR_INDEX > 5:
+        COLOR_INDEX = 0
 
-    print(BRIGHT_MAGENTA + "Exiting game...")
+    print(COLORS[COLOR_INDEX] + f"Shutting Down Battle Station {LOOP_COUNTER}...")
+    LOOP_COUNTER += 1
+    COLOR_INDEX += 1
     PLAY_GAME = False
 
 
@@ -250,17 +261,16 @@ def end_game(results):
     
     """
 
-    player_continue = input(BRIGHT_BLUE + "Enter any key to continue or n to quite: \n" + BRIGHT_MAGENTA)
+    player_continue = input(BRIGHT_BLUE + "Enter any key to continue or n to quite: \n" + BRIGHT_CYAN)
 
     if player_continue.lower() == "n":
-        print(BRIGHT_RED + "Ending Game!")
-        print(BRIGHT_YELLOW + "Exiting...")
+        print(BRIGHT_RED + "Shutting Down Battle Stations!")
         return True
     elif results == True and player_continue.lower() != "n":
-        print(BRIGHT_GREEN + "Starting new game...")
+        print(BRIGHT_GREEN + "Initialising New Battle Ships...")
         new_game()
     else:
-        print(BRIGHT_GREEN + "Continuing...")
+        print(BRIGHT_GREEN + "Reloading Battle Stations...")
         return False
             
 
@@ -288,7 +298,7 @@ def new_game():
     print(f" {BRIGHT_BLUE}Board size: {BRIGHT_GREEN}{size}{BRIGHT_BLUE}. Number of ships: {BRIGHT_GREEN}{num_ships}")
     print(f" {BRIGHT_BLUE}Top left corner is row: {BRIGHT_GREEN}0{BRIGHT_BLUE}, col: {BRIGHT_GREEN}0")
     print(BRIGHT_YELLOW + "-" * 35)
-    player_name = input(BRIGHT_BLUE + "Please enter your name: \n")
+    player_name = input(BRIGHT_BLUE + "Please enter your name: \n" + BRIGHT_CYAN)
     print(BRIGHT_YELLOW + "-" * 35)
 
     computer_board = Board(size, num_ships, "Computer", type="computer")
