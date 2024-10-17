@@ -45,9 +45,11 @@ class Board:
         """
         Takes self.size and prints the board according to size input
         """
+        print("IN: print")
 
         space = " "
         if self.size < 10:
+            # print("IN: if print")
             print(space, end=" ")
             for num in range(0, self.size):
                 print(BRIGHT_GREEN + str(num), end=" ")
@@ -56,6 +58,7 @@ class Board:
             for i, row in enumerate(self.board):
                 print(BRIGHT_GREEN + str(i), space.join(row))
         else:
+            # print("IN: else print")
             space *= 2
             for num in range(10):
                 print(BRIGHT_GREEN + str(num), end=space)
@@ -89,15 +92,15 @@ class Board:
         Appends self.ships to x and y,
         if type is player self.board is replaced with "@"
         """
-        print("IN: add ship")
+        # print("IN: add ship")
 
-        if len(self.ships) >= self.num_ships:
-            print("Error: you cannot add anymore ships!")
-        else:
-            self.ships.append((x, y))
-            if self.type == "player" or self.type == "computer":
-                print("IN: add_ship")
-                self.board[x][y] = f"{BRIGHT_YELLOW}@"
+        # if len(self.ships) >= self.num_ships:
+        #     print("Error: you cannot add anymore ships!")
+        # else:
+        self.ships.append((x, y))
+        if self.type == "player" or self.type == "computer":
+            # print("IN: if add ship")
+            self.board[x][y] = f"{BRIGHT_YELLOW}@"
 
 
 # code for random point function from code insitute https://p3-battleships.herokuapp.com/
@@ -114,11 +117,24 @@ def populate_board(board):
     Takes board.size and uses random_point function 
     calls add_ship method to random_point x and y 
     """
-    print("IN: populate")
-    size = board.size
-    x = random_point(size)
-    y = random_point(size)
-    board.add_ship(x, y)
+    # print("IN: populate")
+    # size = board.size
+    # x = random_point(size)
+    # y = random_point(size)
+    # board.add_ship(x, y)
+    # print("Ships: ", (x, y))
+ 
+    while True:
+        size = board.size
+        x = random_point(size)
+        y = random_point(size)
+        print("SHIPS: ", (x, y))
+        if valid_coordinates(x, y, board):
+            print("VALID SHIPS: ", (x, y))
+            board.add_ship(x, y)
+            print(f"I AM ALIVE!!!!")
+            break
+
 
 
 def adjust_scores(board):
@@ -144,7 +160,8 @@ def valid_coordinates(x, y, board):
         if x < 0 or x >= board.size or y < 0 or y >= board.size:
             print(f"{BRIGHT_RED}Values must be between 0 and {board.size - 1}")
         elif (x, y) in player_list:
-            print(BRIGHT_RED + "You can't guess the same coordinates twice: ".upper() + BRIGHT_GREEN + str(player_list))
+            print(BRIGHT_RED + "You can't guess the same coordinates twice: ".upper())
+            print(BRIGHT_GREEN + str(player_list))
         else:
             player_list.append((x, y))
             return True
@@ -311,16 +328,16 @@ def new_game():
             
     while True:
         try:
-            max_ships = size / 1.2
-            if size <= 3:
-                num_ships = 1
-            else:
-                num_ships = int(input(BRIGHT_BLUE + f"Please enter the number of ships 1 - {int(max_ships)}: \n" + BRIGHT_GREEN))
-            if num_ships < 1 or num_ships > max_ships:
+            # max_ships = size
+            # if size <= 3:
+            #     num_ships = 1
+            # else:
+            num_ships = int(input(BRIGHT_BLUE + f"Please enter the number of ships 1 - {size}: \n" + BRIGHT_GREEN))
+            if num_ships < 1 or num_ships > size:
                 raise ValueError
             break
         except ValueError:
-            print(BRIGHT_RED + f"You must enter a number between 1 and {int(max_ships)}!".upper())
+            print(BRIGHT_RED + f"You must enter a number between 1 and {size}!".upper())
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print(BRIGHT_YELLOW + "-" * 35)
@@ -337,7 +354,7 @@ def new_game():
     computer_board = Board(size, num_ships, "Computer", type="computer")
     player_board = Board(size, num_ships, player_name, type="player")
 
-    for _ in range(num_ships):
+    for i in range(num_ships):
         populate_board(computer_board)
         populate_board(player_board)
     
