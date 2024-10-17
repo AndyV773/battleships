@@ -45,7 +45,7 @@ class Board:
         """
         Takes self.size and prints the board according to size input
         """
-        print("IN: print")
+        # print("IN: print")
 
         space = " "
         if self.size < 10:
@@ -128,11 +128,18 @@ def populate_board(board):
         size = board.size
         x = random_point(size)
         y = random_point(size)
-        print("SHIPS: ", (x, y))
-        if valid_coordinates(x, y, board):
-            print("VALID SHIPS: ", (x, y))
+        print("IN: while", board.name, board.ships)
+        # print("SHIPS: ", (x, y))
+        # if valid_coordinates(x, y, board):
+            # print("VALID SHIPS: ", (x, y))
+            # board.add_ship(x, y)
+            # print(f"I AM ALIVE!!!!")
+            # break
+        if (x, y) in board.ships:
+            continue
+        else:
             board.add_ship(x, y)
-            print(f"I AM ALIVE!!!!")
+            print("IN: else", board.name, board.ships)
             break
 
 
