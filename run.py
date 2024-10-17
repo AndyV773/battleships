@@ -290,7 +290,19 @@ def new_game():
             break
         except ValueError:
             print(BRIGHT_RED + "You must enter a number between 2 and 50!".upper())
-    num_ships = 1
+            
+    while True:
+        try:
+            max_ships = size / 1.2
+            if size <= 3:
+                num_ships = 1
+            else:
+                num_ships = int(input(BRIGHT_BLUE + f"Please enter the number of ships 1 - {int(max_ships)}: \n" + BRIGHT_GREEN))
+            if num_ships < 1 or num_ships > max_ships:
+                raise ValueError
+            break
+        except ValueError:
+            print(BRIGHT_RED + f"You must enter a number between 1 and {int(max_ships)}!".upper())
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print(BRIGHT_YELLOW + "-" * 35)
