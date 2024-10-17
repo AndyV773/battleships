@@ -17,3 +17,8 @@
 ### Validator Testing
 ## Deployment
 ## Credits
+- Code Institute for the [ULTIMATE Battleships game](https://p3-battleships.herokuapp.com/)
+- [Colorama](https://pypi.org/project/colorama/) for colors in terminal
+- [W3S](https://www.w3schools.com/)
+- [Stack Overflow](https://stackoverflow.com/)
+- [Python Forum](https://python-forum.io/index.php)
