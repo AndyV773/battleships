@@ -43,7 +43,7 @@ class Board:
 
     def print(self):
         """
-        
+        Takes self.size and prints the board according to size input
         """
 
         space = " "
@@ -69,7 +69,9 @@ class Board:
     # This method is switched up, due to making the 'X' appear on the opposed board
     def guess(self, x, y):
         """
-        
+        Takes player or computer coordinates x and y,
+        replaces the opposed self.board "X" if it is a miss, or "*" if it is a hit
+        Returns True, or False
         """
 
         self.board[x][y] = f"{BRIGHT_GREEN}X"
@@ -84,7 +86,8 @@ class Board:
     # code for add ship method from code insitute https://p3-battleships.herokuapp.com/
     def add_ship(self, x, y, type="computer"):
         """
-        
+        Appends self.ships to x and y,
+        if type is player self.board is replaced with "@"
         """
 
         if len(self.ships) >= self.num_ships:
@@ -92,6 +95,7 @@ class Board:
         else:
             self.ships.append((x, y))
             if self.type == "player":
+                print("IN: add_ship")
                 self.board[x][y] = f"{BRIGHT_YELLOW}@"
 
 
@@ -106,8 +110,10 @@ def random_point(size):
 
 def populate_board(board):
     """
-
+    Takes board.size and uses random_point function 
+    calls add_ship method to random_point x and y 
     """
+    print("IN: populate")
     size = board.size
     x = random_point(size)
     y = random_point(size)
@@ -153,7 +159,14 @@ def valid_coordinates(x, y, board):
 
 def make_guess(board):
     """
-
+    Takes player input for row "x" and column "y" checks if input is the correct value,
+    passes it to the valid_coordinates function breaks loop if true
+    prints values
+    returns x and y
+    Calls random_point function with board.size argument
+    passes it to the valid_coordinates function breaks loop if true
+    prints values
+    returns x and y 
     """
 
     if board.type == "player":
@@ -184,7 +197,8 @@ def make_guess(board):
 
 def win_lose(computer_board, player_board):
     """
-    
+    Prints a message if player wins, loses or draws
+    Returns True, or False
     """
     if SCORES["player"] == computer_board.num_ships or SCORES["computer"] == player_board.num_ships:
         if SCORES["player"] == computer_board.num_ships and SCORES["computer"] == player_board.num_ships:
@@ -202,17 +216,17 @@ def win_lose(computer_board, player_board):
 
 def play_game(computer_board, player_board):
     """
-
+    Main function, takes global variables and runs a while loop if PLAY_GAME = True
+    calls functions and end_game if True
+    Prints color message in a loop
     """
-    print('IN: play_game')
+
     global PLAY_GAME
     global LOOP_COUNTER
     global COLORS
     global COLOR_INDEX
 
     while PLAY_GAME == True:
-        print('IN: play_game WHILE LOOP')
-
         print(f"{BRIGHT_CYAN}{computer_board.name}'s {BRIGHT_BLUE}Board:")
         computer_board.print()
         print(BRIGHT_YELLOW + "-" * player_board.size * 3)
@@ -258,7 +272,10 @@ def play_game(computer_board, player_board):
 
 def end_game(results):
     """
-    
+    Prompts player if they want to continue or quite
+    if player inputs "n" returns True
+    if results are True and player wants to continue, calls new_game function
+    returns True or False, or calls new_game function
     """
 
     player_continue = input(BRIGHT_BLUE + "Enter any key to continue or n to quite: \n" + BRIGHT_CYAN)
