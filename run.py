@@ -36,8 +36,7 @@ class Board:
         self.num_ships = num_ships
         self.name = name
         self.type = type
-        self.player_guesses = []
-        self.computer_guesses = []
+        self.guesses = []
         self.ships = []
 
 
@@ -144,7 +143,7 @@ def valid_coordinates(x, y, board):
     """
     
     if board.type == "player":
-        player_list = board.player_guesses
+        player_list = board.guesses
         if x < 0 or x >= board.size or y < 0 or y >= board.size:
             print(BRIGHT_RED + "Values must be between 0 and ".upper() + str(board.size - 1))
         elif (x, y) in player_list:
@@ -152,14 +151,16 @@ def valid_coordinates(x, y, board):
             print(BRIGHT_GREEN + str(player_list))
         else:
             player_list.append((x, y))
+            print(f"{BRIGHT_MAGENTA}{player_list}")
             return True
         
     else:
-        computer_list = board.computer_guesses
+        computer_list = board.guesses
         if (x, y) in computer_list:
             return False
         else:
             computer_list.append((x, y))
+            print(f"{BRIGHT_MAGENTA}{computer_list}")
             return True
 
 
@@ -197,8 +198,9 @@ def make_guess(board):
             if valid_coordinates(x, y, board):
                 print(f"{BRIGHT_CYAN}{board.name} {BRIGHT_BLUE}guessed: {BRIGHT_GREEN}{x, y}")
                 break
-
+    
     return x, y
+
 
 
 def win_lose(computer_board, player_board):
