@@ -155,7 +155,6 @@ def valid_coordinates(x, y, board):
             print(BRIGHT_GREEN + str(player_list))
         else:
             player_list.append((x, y))
-            print(f"{BRIGHT_MAGENTA}{player_list}")
             return True
 
     else:
@@ -164,7 +163,6 @@ def valid_coordinates(x, y, board):
             return False
         else:
             computer_list.append((x, y))
-            print(f"{BRIGHT_MAGENTA}{computer_list}")
             return True
 
 
@@ -250,48 +248,47 @@ def play_game(computer_board, player_board):
     global COLORS
     global COLOR_INDEX
 
-    if PLAY_GAME:
-        while True:
-            print(f"{BRIGHT_CYAN}{computer_board.name}'s {BRIGHT_BLUE}Board:")
-            computer_board.print()
-            print(BRIGHT_YELLOW + "-" * player_board.size * 3)
-            print(f"{BRIGHT_CYAN}{player_board.name}'s {BRIGHT_BLUE}Board:")
-            player_board.print()
+    while PLAY_GAME:
+        print(f"{BRIGHT_CYAN}{computer_board.name}'s {BRIGHT_BLUE}Board:")
+        computer_board.print()
+        print(BRIGHT_YELLOW + "-" * player_board.size * 3)
+        print(f"{BRIGHT_CYAN}{player_board.name}'s {BRIGHT_BLUE}Board:")
+        player_board.print()
 
-            player_awnser = make_guess(player_board)
-            player_result_win = computer_board.guess(*player_awnser)
+        player_awnser = make_guess(player_board)
+        player_result_win = computer_board.guess(*player_awnser)
 
-            if player_result_win:
-                adjust_scores(player_board)
-                print(BRIGHT_RED + player_board.name.upper() +
-                      " got a Hit!!".upper())
-            else:
-                print(f"{BRIGHT_YELLOW}{player_board.name}"
-                      " missed this time.")
+        if player_result_win:
+            adjust_scores(player_board)
+            print(BRIGHT_RED + player_board.name.upper() +
+                  " got a Hit!!".upper())
+        else:
+            print(f"{BRIGHT_YELLOW}{player_board.name}"
+                  " missed this time.")
 
-            computer_awnser = make_guess(computer_board)
-            computer_result_win = player_board.guess(*computer_awnser)
+        computer_awnser = make_guess(computer_board)
+        computer_result_win = player_board.guess(*computer_awnser)
 
-            if computer_result_win:
-                adjust_scores(computer_board)
-                print(BRIGHT_RED + computer_board.name.upper() +
-                      " got a Hit!!".upper())
-            else:
-                print(f"{BRIGHT_YELLOW}{computer_board.name}"
-                      " missed this time.")
+        if computer_result_win:
+            adjust_scores(computer_board)
+            print(BRIGHT_RED + computer_board.name.upper() +
+                  " got a Hit!!".upper())
+        else:
+            print(f"{BRIGHT_YELLOW}{computer_board.name}"
+                  " missed this time.")
 
-            print(BRIGHT_YELLOW + "-" * 35)
-            print(BRIGHT_BLUE + "After this round the scores are:")
-            print(f"{BRIGHT_BLUE}{player_board.name}:"
-                  f" {BRIGHT_GREEN + str(SCORES["player"])}"
-                  f"{BRIGHT_BLUE} / {computer_board.name}:"
-                  f" {BRIGHT_GREEN + str(SCORES["computer"])}")
-            print(BRIGHT_YELLOW + "-" * 35)
+        print(BRIGHT_YELLOW + "-" * 35)
+        print(BRIGHT_BLUE + "After this round the scores are:")
+        print(f"{BRIGHT_BLUE}{player_board.name}:"
+              f" {BRIGHT_GREEN + str(SCORES["player"])}"
+              f"{BRIGHT_BLUE} / {computer_board.name}:"
+              f" {BRIGHT_GREEN + str(SCORES["computer"])}")
+        print(BRIGHT_YELLOW + "-" * 35)
 
-            results = win_lose(computer_board, player_board)
+        results = win_lose(computer_board, player_board)
 
-            if end_game(results):
-                break
+        if end_game(results):
+            break
 
     if COLOR_INDEX >= len(COLORS):
         COLOR_INDEX = 0
@@ -350,7 +347,7 @@ def new_game():
         try:
             num_ships = int(input(BRIGHT_BLUE +
                                   "Please enter the "
-                                  "number of ships 1 - {size}: \n"
+                                  f"number of ships 1 - {size}: \n"
                                   + BRIGHT_GREEN))
             if num_ships < 1 or num_ships > size:
                 raise ValueError
