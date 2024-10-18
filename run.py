@@ -45,11 +45,9 @@ class Board:
         """
         Takes self.size and prints the board according to size input
         """
-        # print("IN: print")
 
         space = " "
         if self.size < 10:
-            # print("IN: if print")
             print(space, end=" ")
             for num in range(0, self.size):
                 print(BRIGHT_GREEN + str(num), end=" ")
@@ -58,7 +56,6 @@ class Board:
             for i, row in enumerate(self.board):
                 print(BRIGHT_GREEN + str(i), space.join(row))
         else:
-            # print("IN: else print")
             space *= 2
             for num in range(10):
                 print(BRIGHT_GREEN + str(num), end=space)
@@ -92,14 +89,12 @@ class Board:
         Appends self.ships to x and y,
         if type is player self.board is replaced with "@"
         """
-        # print("IN: add ship")
 
         # if len(self.ships) >= self.num_ships:
         #     print("Error: you cannot add anymore ships!")
         # else:
         self.ships.append((x, y))
-        if self.type == "player" or self.type == "computer":
-            # print("IN: if add ship")
+        if self.type == "player":
             self.board[x][y] = f"{BRIGHT_YELLOW}@"
 
 
@@ -117,29 +112,15 @@ def populate_board(board):
     Takes board.size and uses random_point function 
     calls add_ship method to random_point x and y 
     """
-    # print("IN: populate")
-    # size = board.size
-    # x = random_point(size)
-    # y = random_point(size)
-    # board.add_ship(x, y)
-    # print("Ships: ", (x, y))
  
     while True:
         size = board.size
         x = random_point(size)
         y = random_point(size)
-        print("IN: while", board.name, board.ships)
-        # print("SHIPS: ", (x, y))
-        # if valid_coordinates(x, y, board):
-            # print("VALID SHIPS: ", (x, y))
-            # board.add_ship(x, y)
-            # print(f"I AM ALIVE!!!!")
-            # break
         if (x, y) in board.ships:
             continue
         else:
             board.add_ship(x, y)
-            print("IN: else", board.name, board.ships)
             break
 
 
@@ -165,7 +146,7 @@ def valid_coordinates(x, y, board):
     if board.type == "player":
         player_list = board.player_guesses
         if x < 0 or x >= board.size or y < 0 or y >= board.size:
-            print(f"{BRIGHT_RED}Values must be between 0 and {board.size - 1}")
+            print(BRIGHT_RED + "Values must be between 0 and ".upper() + str(board.size - 1))
         elif (x, y) in player_list:
             print(BRIGHT_RED + "You can't guess the same coordinates twice: ".upper())
             print(BRIGHT_GREEN + str(player_list))
@@ -286,7 +267,7 @@ def play_game(computer_board, player_board):
         if end_game(results) == True:
             break
         
-    if COLOR_INDEX > 5:
+    if COLOR_INDEX >= len(COLORS):
         COLOR_INDEX = 0
 
     print(COLORS[COLOR_INDEX] + f"Shutting Down Battle Station {LOOP_COUNTER}...")
@@ -335,10 +316,6 @@ def new_game():
             
     while True:
         try:
-            # max_ships = size
-            # if size <= 3:
-            #     num_ships = 1
-            # else:
             num_ships = int(input(BRIGHT_BLUE + f"Please enter the number of ships 1 - {size}: \n" + BRIGHT_GREEN))
             if num_ships < 1 or num_ships > size:
                 raise ValueError
