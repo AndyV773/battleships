@@ -384,7 +384,6 @@ def new_game():
           f" Number of ships: {BRIGHT_GREEN}{num_ships}")
     print(f" {BRIGHT_BLUE}Top left corner is row:"
           f"{BRIGHT_GREEN} 0{BRIGHT_BLUE}, col: {BRIGHT_GREEN}0")
-    print(BRIGHT_YELLOW + "-" * 35)
     print(BRIGHT_YELLOW + "-" * 11 + " How To Play " + "-" * 11)
     print(BRIGHT_BLUE + " Using   the  coordinate   numbers")
     print(BRIGHT_BLUE + " choose a point on  the computer's")
