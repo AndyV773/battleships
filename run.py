@@ -332,16 +332,19 @@ def new_game():
     """
 
     while True:
+        print(BRIGHT_YELLOW + "-" * 35)
+        print(BRIGHT_BLUE + " Welcome to ULTIMATE BATTLESHIPS!!")
+        print(BRIGHT_YELLOW + "-" * 35)
         try:
             size = int(input(BRIGHT_BLUE +
-                             "Please enter size of map 2 - 50: \n"
+                             "Please enter size of map 2 - 26: \n"
                              + BRIGHT_GREEN))
-            if size < 2 or size > 50:
+            if size < 2 or size > 26:
                 raise ValueError
             break
         except ValueError:
             print(BRIGHT_RED +
-                  "You must enter a number between 2 and 50!".upper())
+                  "You must enter a number between 2 and 26!".upper())
 
     while True:
         try:
@@ -358,7 +361,6 @@ def new_game():
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print(BRIGHT_YELLOW + "-" * 35)
-    print(BRIGHT_BLUE + " Welcome to ULTIMATE BATTLESHIPS!!")
     print(f" {BRIGHT_BLUE}Board size: "
           f"{BRIGHT_GREEN}{size}{BRIGHT_BLUE}."
           f" Number of ships: {BRIGHT_GREEN}{num_ships}")
