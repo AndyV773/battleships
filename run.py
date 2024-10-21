@@ -291,7 +291,7 @@ def play_game(computer_board, player_board):
         COLOR_INDEX = 0
 
     print(COLORS[COLOR_INDEX] +
-          f"Initialising New Battle Station {LOOP_COUNTER}...\n")
+          f"Initialising New Battle Station {LOOP_COUNTER}...")
     LOOP_COUNTER += 1
     COLOR_INDEX += 1
     new_game()
@@ -306,21 +306,21 @@ def end_game(results):
     """
 
     if results:
-        player_continue_1 = input(BRIGHT_BLUE +
+        player_continue = input(BRIGHT_BLUE +
                             "Enter any key to continue: \n"
                             + BRIGHT_CYAN)
     else:
-        player_continue_2 = input(BRIGHT_BLUE +
+        player_continue = input(BRIGHT_BLUE +
                             "Enter any key to continue or n to quite: \n"
                             + BRIGHT_CYAN)
         
     if results:
         return True
-    elif results != True and player_continue_2.lower() == "n":
-        print(BRIGHT_RED + "Shutting Down Battle Stations!\n")
+    elif results != True and player_continue.lower() == "n":
+        print(BRIGHT_RED + "Shutting Down Battle Stations!")
         return True
     else:
-        print(BRIGHT_GREEN + "Reloading Battle Stations...\n")
+        print(BRIGHT_GREEN + "Reloading Battle Stations...")
         return False
 
 
@@ -346,19 +346,24 @@ def new_game():
         except ValueError:
             print(BRIGHT_RED +
                   "You must enter a number between 2 and 26!".upper())
+    
+    if size <= 9:
+        max_ships = size
+    else:
+        max_ships = size * 2
 
     while True:
         try:
             num_ships = int(input(BRIGHT_BLUE +
                                   "Please enter the "
-                                  f"number of ships 1 - {size}: \n"
+                                  f"number of ships 1 - {max_ships}: \n"
                                   + BRIGHT_GREEN))
-            if num_ships < 1 or num_ships > size:
+            if num_ships < 1 or num_ships > max_ships:
                 raise ValueError
             break
         except ValueError:
             print(BRIGHT_RED +
-                  f"You must enter a number between 1 and {size}!".upper())
+                  f"You must enter a number between 1 and {max_ships}!".upper())
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print(BRIGHT_YELLOW + "-" * 35)
