@@ -27,7 +27,49 @@ The player can then input there name, and the boards will be generated.
 The player and the computer then take turns to make a guess and sink each other's battleships.
 
 The winner is the player who sinks all of thier opponent's battleships first.
+
 ## Features
+
+- **Colorama**
+  - The first noticeable difference I implemented was adding Colorama to introduce different colors, making the game more visually appealing and allowing the user to easily distinguish between different outputs.
+- **Board size and ship input**
+  - Next, I allowed the player to input the size of the board they want to play and the number of ships they would like to add.
+
+  ![game size and ship input](assets/images/readme-images/size-input.jpg)
+
+- **How to play**
+  - I then added a brief description of how to play, following the original feature that displays the board size, the number of ships, and the row and column details.
+
+  ![game how to play](assets/images/readme-images/how-to-play.jpg)
+
+- **Numbers for navigating**
+  - I added numbers to the board to help determine the coordinates, making it easier for the player to navigate, enhancing the overall player experience. These numbers will change positions depending on the size of the board.
+
+  - Small board
+
+  ![game samll board](assets/images/readme-images/small-board.jpg)
+
+  - Large board
+
+  ![game large board](assets/images/readme-images/large-board.jpg)
+
+- **Outputs to user**
+  - Keeps track of scores
+  - prompts the player of the computers coordinates
+  - outputs message if player or computer has a Hit or miss
+  - prompts player if win, draw or loses
+  - Has a tally up message for each initialisation of new battle station, with a color change
+
+  ![end results after a winning match](assets/images/readme-images/victory.jpg)
+
+- **Input validation and error-checking**
+  - You cannot enter the same coordinates twice
+    - Keeps a track of coordinates and displays to user 
+  - You must enter a number
+  - Values must be between 0 and `board.size`
+
+  ![game validation](assets/images/readme-images/valid-coordinates.jpg)
+
 ## Data Model
 ## Testing
 ## Bugs
