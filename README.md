@@ -71,7 +71,13 @@ The winner is the player who sinks all of thier opponent's battleships first.
   ![game validation](assets/images/readme-images/valid-coordinates.jpg)
 
 ## Data Model
-## Testing
+
+I used the data model provided by Code Institute, which includes a `Board` class. The game creates two instances of the `Board` class to hold the player’s and computer's boards. This class is essential for managing the game's state.
+
+The `Board` class stores various details such as the board size, the number of ships, the positions of the ships, and the guesses made against the board. It also keeps track of the board type, indicating whether it's the player's board or the computer's board, as well as the player's name.
+
+Additionally, the class includes methods that facilitate gameplay. These methods comprise a `print` function to display the current board, an `add_ships` method to place ships on the board, and an `add_guess` method to record a guess and return the result.
+
 ## Bugs
 ### Solved Bugs
 - **Stuck in a While Loop:**
@@ -88,6 +94,7 @@ After uploading to Heroku, I realized that the logic I used to break out of the 
 
 ### Remaing Bugs
 - No bugs remaining
+
 ## Testing
 ### Manual Testing
 - Vigorous manual testing to ensure everything functions as expected
