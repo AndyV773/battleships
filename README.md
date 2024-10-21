@@ -21,6 +21,7 @@ After uploading to Heroku, I realized that the logic I used to break out of the 
 - No bugs remaining
 ## Testing
 ### Manual Testing
+- Vigorous manual testing to ensure everything functions as expected
 ### Validator Testing
 - PEP8
   - There were errors with the [PEP8 Validator](https://pep8ci.herokuapp.com/), mainly related to whitespace and excessive line lengths
@@ -30,6 +31,15 @@ After uploading to Heroku, I realized that the logic I used to break out of the 
     ![screenshot of pep8 pass](assets/images/readme-images/pep8-pass.jpg)
 
 ## Deployment
+This project was deployed using Code Institute's mock terminal for Heroku.
+- **Steps for deployment**
+  - Fork or clone this [repository](https://github.com/AndyV773/battleships)
+  - Create a new Heroku app
+  - Add Config Var in Heroku's settings. The key is **PORT** and the value is **8000**
+  - Set the buildbacks to **Python** and **NodeJS** in that order
+  - Link the Heroku app to the repository
+  - Click on **Deploy**
+
 ## Credits
 - Code Institute for the [ULTIMATE Battleships game](https://p3-battleships.herokuapp.com/) and the deployment terminal
 - [Colorama](https://pypi.org/project/colorama/) for colors in terminal
