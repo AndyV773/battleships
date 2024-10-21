@@ -3,17 +3,30 @@ Welcome to my version of the Code Institute Battleship game! You can find the or
 
 This is a Python terminal game that runs in the Code Institute mock terminal on Heroku.
 
-Initially, I was unsure on what direction to take for my Project 3, so I decided to work on the Battleship game using the data model provided by Code Institute and fill in the blanks. However, the task turned out to be more challenging than I expected. Nevertheless, I got there in the end and added some features along the way.
+Initially, I was unsure on what direction to take for my Project 3, so I decided to work on the Battleship game using the data model provided by Code Institute and fill in the blanks. However, the task turned out to be more challenging than I expected. Probably spending more time trying to break out of a while loop then needed. Nevertheless, I got there in the end and added some features along the way.
 
-This project has increased my understanding of data models, and allowed my skills to grow in to a better developer. 
-
-The game is based on the classic Battleship concept, for more information [Wikipedia](https://en.wikipedia.org/wiki/Battleship) 
+This project has increased my understanding of data models, and allowed me to grow in to a better developer.  
 
 [Here is the live version of my project](https://my-battleships-version-dbd5056212a9.herokuapp.com/)
 
 ![screenshot of battleships game from i am responsive](assets/images/readme-images/responsive.jpg)
 
 ## How to play
+The game is based on the classic Battleship concept. You can find more about it on [Wikipedia](https://en.wikipedia.org/wiki/Battleship)
+
+In this version, the player can input the size of the board, which ranges from 1 to 26 to fit within the Heroku terminal's. The player will also input the number of ships to add, with a minimum of one ship and a maximum determined by the board size.
+
+Then the player will be prompted with details about the board and a brief description of how to play.
+
+The player can see where their ships are, indicated by a `@`, but cannot see where the computer's ships are.
+
+Guesses are marked on the board withan `X`. Hits are indicated by `*`.
+
+The player can then input there name, and the boards will be generated.
+
+The player and the computer then take turns to make a guess and sink each other's battleships.
+
+The winner is the player who sinks all of thier opponent's battleships first.
 ## Features
 ## Data Model
 ## Testing
