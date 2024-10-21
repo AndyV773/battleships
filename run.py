@@ -89,9 +89,7 @@ class Board:
         Appends self.ships to x and y,
         if type is player self.board is replaced with "@"
         """
-        # if len(self.ships) >= self.num_ships:
-        #     print("Error: you cannot add anymore ships!")
-        # else:
+
         self.ships.append((x, y))
         if self.type == "player":
             self.board[x][y] = f"{BRIGHT_YELLOW}@"
@@ -233,6 +231,39 @@ def win_lose(computer_board, player_board):
         return False
 
 
+def calculate_results(computer_board, player_board):
+    """
+    Takes both computer and player board class
+    Puts values from make_guess function in to a variable,
+    and appends it to the guess list of the opposed player
+    (computer or player) in board class
+    prints a message to the terminal
+    calls adjust_scores function
+    """
+
+    player_awnser = make_guess(player_board)
+    player_result_win = computer_board.guess(*player_awnser)
+
+    if player_result_win:
+        adjust_scores(player_board)
+        print(BRIGHT_RED + player_board.name.upper() +
+              " got a Hit!!".upper())
+    else:
+        print(f"{BRIGHT_YELLOW}{player_board.name}"
+              " missed this time.")
+
+    computer_awnser = make_guess(computer_board)
+    computer_result_win = player_board.guess(*computer_awnser)
+
+    if computer_result_win:
+        adjust_scores(computer_board)
+        print(BRIGHT_RED + computer_board.name.upper() +
+              " got a Hit!!".upper())
+    else:
+        print(f"{BRIGHT_YELLOW}{computer_board.name}"
+              " missed this time.")
+
+
 def play_game(computer_board, player_board):
     """
     Main function, takes global variables
@@ -252,27 +283,7 @@ def play_game(computer_board, player_board):
         print(f"{BRIGHT_CYAN}{player_board.name}'s {BRIGHT_BLUE}Board:")
         player_board.print()
 
-        player_awnser = make_guess(player_board)
-        player_result_win = computer_board.guess(*player_awnser)
-
-        if player_result_win:
-            adjust_scores(player_board)
-            print(BRIGHT_RED + player_board.name.upper() +
-                  " got a Hit!!".upper())
-        else:
-            print(f"{BRIGHT_YELLOW}{player_board.name}"
-                  " missed this time.")
-
-        computer_awnser = make_guess(computer_board)
-        computer_result_win = player_board.guess(*computer_awnser)
-
-        if computer_result_win:
-            adjust_scores(computer_board)
-            print(BRIGHT_RED + computer_board.name.upper() +
-                  " got a Hit!!".upper())
-        else:
-            print(f"{BRIGHT_YELLOW}{computer_board.name}"
-                  " missed this time.")
+        calculate_results(computer_board, player_board)
 
         print(BRIGHT_YELLOW + "-" * 35)
         print(BRIGHT_BLUE + "After this round the scores are:")
@@ -307,16 +318,16 @@ def end_game(results):
 
     if results:
         player_continue = input(BRIGHT_BLUE +
-                            "Enter any key to continue: \n"
-                            + BRIGHT_CYAN)
+                                "Enter any key to continue: \n"
+                                + BRIGHT_CYAN)
     else:
         player_continue = input(BRIGHT_BLUE +
-                            "Enter any key to continue or n to quite: \n"
-                            + BRIGHT_CYAN)
-        
+                                "Enter any key to continue or n to quite: \n"
+                                + BRIGHT_CYAN)
+
     if results:
         return True
-    elif results != True and player_continue.lower() == "n":
+    elif results is False and player_continue.lower() == "n":
         print(BRIGHT_RED + "Shutting Down Battle Stations!")
         return True
     else:
@@ -346,7 +357,7 @@ def new_game():
         except ValueError:
             print(BRIGHT_RED +
                   "You must enter a number between 2 and 26!".upper())
-    
+
     if size <= 9:
         max_ships = size
     else:
@@ -363,7 +374,8 @@ def new_game():
             break
         except ValueError:
             print(BRIGHT_RED +
-                  f"You must enter a number between 1 and {max_ships}!".upper())
+                  "You must enter a number between 1 and"
+                  f" {max_ships}!".upper())
     SCORES["computer"] = 0
     SCORES["player"] = 0
     print(BRIGHT_YELLOW + "-" * 35)
