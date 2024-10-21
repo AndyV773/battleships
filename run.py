@@ -20,9 +20,7 @@ COLOR_INDEX = 0
 
 # Global variables
 SCORES = {"computer": 0, "player": 0}
-# Helper variable to break out of play game while loop
-PLAY_GAME = True
-LOOP_COUNTER = 1
+LOOP_COUNTER = 2
 
 
 # Some of the code in the Board class come from code insitute:
@@ -243,12 +241,11 @@ def play_game(computer_board, player_board):
     Prints color message in a loop
     """
 
-    global PLAY_GAME
     global LOOP_COUNTER
     global COLORS
     global COLOR_INDEX
 
-    while PLAY_GAME:
+    while True:
         print(f"{BRIGHT_CYAN}{computer_board.name}'s {BRIGHT_BLUE}Board:")
         computer_board.print()
         print(BRIGHT_YELLOW + "-" * player_board.size * 3)
@@ -294,10 +291,10 @@ def play_game(computer_board, player_board):
         COLOR_INDEX = 0
 
     print(COLORS[COLOR_INDEX] +
-          f"Shutting Down Battle Station {LOOP_COUNTER}...")
+          f"Initialising New Battle Station {LOOP_COUNTER}...\n")
     LOOP_COUNTER += 1
     COLOR_INDEX += 1
-    PLAY_GAME = False
+    new_game()
 
 
 def end_game(results):
@@ -308,18 +305,22 @@ def end_game(results):
     returns True or False, or calls new_game function
     """
 
-    player_continue = input(BRIGHT_BLUE +
+    if results:
+        player_continue_1 = input(BRIGHT_BLUE +
+                            "Enter any key to continue: \n"
+                            + BRIGHT_CYAN)
+    else:
+        player_continue_2 = input(BRIGHT_BLUE +
                             "Enter any key to continue or n to quite: \n"
                             + BRIGHT_CYAN)
-
-    if player_continue.lower() == "n":
-        print(BRIGHT_RED + "Shutting Down Battle Stations!")
+        
+    if results:
         return True
-    elif results and player_continue.lower() != "n":
-        print(BRIGHT_GREEN + "Initialising New Battle Ships...")
-        new_game()
+    elif results != True and player_continue_2.lower() == "n":
+        print(BRIGHT_RED + "Shutting Down Battle Stations!\n")
+        return True
     else:
-        print(BRIGHT_GREEN + "Reloading Battle Stations...")
+        print(BRIGHT_GREEN + "Reloading Battle Stations...\n")
         return False
 
 
