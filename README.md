@@ -18,12 +18,20 @@
 After uploading to Heroku, I realized that the logic I used to break out of the while loop in the play_game function was incorrect. Instead of crashing the game to access the terminal, it should remain in a continuous loop. So, I called the new_game function instead and adjusted the output messages for a better user experience. I also decided to keep the loop counter and color list to add a bit of character and as a reminder to myself to push to Heroku earlier for testing.
 
 ### Remaing Bugs
+- No bugs remaining
 ## Testing
 ### Manual Testing
 ### Validator Testing
+- PEP8
+  - There were errors with the [PEP8 Validator](https://pep8ci.herokuapp.com/), mainly related to whitespace and excessive line lengths
+    ![screenshot of pep8 errors](assets/images/readme-images/pep8-errors.jpg)
+
+  - All errors have been fixed
+    ![screenshot of pep8 pass](assets/images/readme-images/pep8-pass.jpg)
+
 ## Deployment
 ## Credits
-- Code Institute for the [ULTIMATE Battleships game](https://p3-battleships.herokuapp.com/)
+- Code Institute for the [ULTIMATE Battleships game](https://p3-battleships.herokuapp.com/) and the deployment terminal
 - [Colorama](https://pypi.org/project/colorama/) for colors in terminal
 - [W3S](https://www.w3schools.com/)
 - [Stack Overflow](https://stackoverflow.com/)
