@@ -1,4 +1,18 @@
 # ULTIMATE Battleships
+Welcome to my version of the Code Institute Battleship game! You can find the original version [here](https://p3-battleships.herokuapp.com/)
+
+This is a Python terminal game that runs in the Code Institute mock terminal on Heroku.
+
+Initially, I was unsure on what direction to take for my Project 3, so I decided to work on the Battleship game using the data model provided by Code Institute and fill in the blanks. However, the task turned out to be more challenging than I expected. Nevertheless, I got there in the end and added some features along the way.
+
+This project has increased my understanding of data models, and allowed my skills to grow in to a better developer. 
+
+The game is based on the classic Battleship concept, for more information [Wikipedia](https://en.wikipedia.org/wiki/Battleship) 
+
+[Here is the live version of my project](https://my-battleships-version-dbd5056212a9.herokuapp.com/)
+
+![screenshot of battleships game from i am responsive](assets/images/readme-images/responsive.jpg)
+
 ## How to play
 ## Features
 ## Data Model
@@ -35,8 +49,8 @@ This project was deployed using Code Institute's mock terminal for Heroku.
 - **Steps for deployment**
   - Fork or clone this [repository](https://github.com/AndyV773/battleships)
   - Create a new Heroku app
-  - Add Config Var in Heroku's settings. The key is **PORT** and the value is **8000**
-  - Set the buildbacks to **Python** and **NodeJS** in that order
+  - Add Config Var in Heroku's settings. The key is `PORT` and the value is `8000`
+  - Set the buildbacks to `Python` and `NodeJS` in that order
   - Link the Heroku app to the repository
   - Click on **Deploy**
 
