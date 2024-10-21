@@ -15,6 +15,8 @@
 - **Giving the same Random Values**
     Fixed a bug where the ship was not being appended to the board correctly. I forgot that the random function can generate the same values multiple times, which sometimes resulted in only 3 ships being printed instead of 4. To fix this, I put the random functions in a while loop with an if statement.
 
+After uploading to Heroku, I realized that the logic I used to break out of the while loop in the play_game function was incorrect. Instead of crashing the game to access the terminal, it should remain in a continuous loop. So, I called the new_game function instead and adjusted the output messages for a better user experience. I also decided to keep the loop counter and color list to add a bit of character and as a reminder to myself to push to Heroku earlier for testing.
+
 ### Remaing Bugs
 ## Testing
 ### Manual Testing
