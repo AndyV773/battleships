@@ -20,7 +20,7 @@ Then the player will be prompted with details about the board and a brief descri
 
 The player can see where their ships are, indicated by a `@`, but cannot see where the computer's ships are.
 
-Guesses are marked on the board withan `X`. Hits are indicated by `*`.
+Guesses are marked on the board with an `X`. Hits are indicated by `*`.
 
 The player can then input there name, and the boards will be generated.
 
@@ -63,10 +63,19 @@ The winner is the player who sinks all of thier opponent's battleships first.
   ![end results after a winning match](assets/images/readme-images/victory.jpg)
 
 - **Input validation and error-checking**
-  - You cannot enter the same coordinates twice
-    - Keeps a track of coordinates and displays to user 
-  - You must enter a number
-  - Values must be between 0 and `board.size`
+
+I have ensured that the user cannot input the incorrect values. The terminal will prompt the user if:
+
+1. **Same Coordinates:**
+  - Coordinates are added to a list once they have been input, and each time, they are checked to see if they have already been used
+    - **Message:** YOU CANNOT ENTER THE SAME COORDINATES TWICE:
+      - Keeps a track of coordinates and displays to user
+2. **Value Error:**
+  - The player must enter a number. If not, they will be notified
+    - **Message:** YOU MUST ENTER A NUMBER!
+3. **Value out of Range:**
+  - It also checks that the value input by the user is within the size of the board
+    - **Message:** VALUES MUST BE BETWEEN 0 AND `board.size`
 
   ![game validation](assets/images/readme-images/valid-coordinates.jpg)
 
@@ -76,7 +85,7 @@ I used the data model provided by Code Institute, which includes a `Board` class
 
 The `Board` class stores various details such as the board size, the number of ships, the positions of the ships, and the guesses made against the board. It also keeps track of the board type, indicating whether it's the player's board or the computer's board, as well as the player's name.
 
-Additionally, the class includes methods that facilitate gameplay. These methods comprise a `print` function to display the current board, an `add_ships` method to place ships on the board, and an `add_guess` method to record a guess and return the result.
+Additionally, the class includes methods that facilitate gameplay. These methods comprise a `print` function to display the current board, an `add_ships` method to place ships on the board, and an `guess` method to return the result.
 
 ## Bugs
 ### Solved Bugs
@@ -92,7 +101,7 @@ Additionally, the class includes methods that facilitate gameplay. These methods
 - **Giving the same Random Values:**
     Fixed a bug where the ship was not being appended to the board correctly. I forgot that the random function can generate the same values multiple times, which sometimes resulted in only 3 ships being printed instead of 4. To fix this, I put the random functions in a while loop with an if statement.
 
-** ***UPDATE:*** **
+### ** ***UPDATE:*** **
 
   After uploading to Heroku, I realized that the logic I used to break out of the while loop in the play_game function was the wrong approach. Instead of crashing the game to access the terminal, it should remain in a continuous loop. So, I removed the global variable PLAY_GAME (was going to change to CONTINUE_GAME for differential), and called the new_game function instead then adjusted the output messages for a better user experience. I also decided to keep the loop counter and color list to add a bit of character and as a reminder to myself to push to Heroku earlier for testing.
 
@@ -104,13 +113,13 @@ Additionally, the class includes methods that facilitate gameplay. These methods
 ## Testing
 ### Manual Testing
 - Vigorous manual testing to ensure everything functions as expected
-1. **Input Validation**: 
+1. **Input Validation:**
    - Check that all input fields rejects incorrect formats and provide appropriate error messages
 
-2. **Coordinate Display**:
+2. **Coordinate Display:**
    - Check that the correct coordinates are displayed on the board for each player’s move
 
-3. **Game Mechanics**:
+3. **Game Mechanics:**
    - Ensure that the correct output is printed on the board (e.g., hit, miss)
    - Check that the game behaves as expected under various scenarios (e.g., winning, losing, drawing)
    - Verify that the scores are added up correctly
