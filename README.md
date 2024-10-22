@@ -98,6 +98,17 @@ After uploading to Heroku, I realized that the logic I used to break out of the 
 ## Testing
 ### Manual Testing
 - Vigorous manual testing to ensure everything functions as expected
+1. **Input Validation**: 
+   - Check that all input fields rejects incorrect formats and provide appropriate error messages
+
+2. **Coordinate Display**:
+   - Check that the correct coordinates are displayed on the board for each player’s move
+
+3. **Game Mechanics**:
+   - Ensure that the correct output is printed on the board (e.g., hit, miss)
+   - Check that the game behaves as expected under various scenarios (e.g., winning, losing, drawing)
+   - Verify that the scores are added up correctly
+
 ### Validator Testing
 - PEP8
   - There were errors with the [PEP8 Validator](https://pep8ci.herokuapp.com/), mainly related to whitespace and excessive line lengths
